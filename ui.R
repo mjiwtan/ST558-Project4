@@ -284,6 +284,31 @@ dashboardPage(
                             ),
                             tabPanel("Model Fitting",
                                      fluidRow(
+                                       column(1
+                                       ),
+                                       column(10,align = "center",
+                                              box(width=NULL,height=45,title="Splitting the Data",background="green")
+                                       ),
+                                       column(1
+                                       )
+                                     ),
+                                     fluidRow(
+                                       column(1
+                                       ),
+                                       column(5,
+                                              box(width=NULL,status="info",
+                                                  sliderInput("split_number","Training Set proportion",
+                                                              min=0.6,max=0.9,value=0.7,step=0.05))
+                                       ),
+                                       column(5,
+                                              box(width =NULL,status = "info",align="center",
+                                                  
+                                                  actionButton("split","Click here to split Data"))
+                                       ),
+                                       column(1
+                                       )
+                                     ),
+                                     fluidRow(
                                        column(4,
                                               box(width=NULL,title="Generalized Linear Model: Binary Logistic Regression",
                                                   status="info",solidHeader = TRUE,
@@ -424,6 +449,7 @@ dashboardPage(
                                      )
                             ),
                             tabPanel("Prediction",
+                                     
                                      fluidRow(
                                        column(2),
                                        column(8,
