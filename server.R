@@ -5,7 +5,7 @@ library(leaps)
 library(psych) 
 library(corrplot)
 data<-read_csv("insurance.csv")
-
+data_original<-data
 data$sex <- as.factor(data$sex)
 data$sex <- factor(data$sex, levels = c("female", "male"), labels = c(0,1))
 data$children<-as.factor(data$children)
@@ -368,6 +368,36 @@ shinyServer(function(input, output) {
      predict_value
    })
    
+# Reading the data and downloading it  
+   reading<-reactive({
+     val1<-c(input$subset_data)
+   })
+   num_rows<-reactive({
+     input$nrows
+   })
    
+   output$data_csv<-renderDataTable({
+     subsetting<-reading()
+     size=num_rows()
+     df_subset<-data_original%>%select(subsetting)
+     df_subset[c(1:size),]
+   })    
    
+   # Download the data
+   
+   reading1<-eventReactive(input$download,{
+     val1<-c(input$subset_data)
+   })
+   num_rows1<-reactive({
+     data_original[c(1:input$nrows),]
+   })
+   output$download <- downloadHandler(
+     filename = function() { 
+       paste("Insurance1", Sys.Date(), ".csv", sep="")
+     },
+     content = function(file) {
+       final_data<-num_rows1()%>%select(reading())
+       
+       write.csv(final_data , file)
+     })
 })

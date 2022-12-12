@@ -19,7 +19,7 @@ dashboardPage(
                           
                          
                           fluidRow(
-                            column(12,align="center",
+                            column(12,
                                 box(width=NULL,title="Purpose of the App",status="info",solidHeader = TRUE,
                                     h4("The aim for this application is to create a shiny app for the insurance of the data."),
                                     h4("The app will help in identifying in the insurance charges for the person. The app will contain information about 
@@ -27,7 +27,7 @@ dashboardPage(
                                     
                             )),
                             fluidRow(
-                              column(12,align="center",
+                              column(12,
                                      box(width=NULL,title="Data",status="info",solidHeader = TRUE,
                                          h4("US health Insurance dataset can be helpful in a simple yet illuminating study in understanding the risk underwriting in Health Insurance, the interplay of various attributes of the insured and see how they affect the insurance premium."),
                                          h4("This dataset contains 1338 rows of insured data, where the Insurance charges are given against the following attributes of the insured: Age, Sex, BMI, Number of Children, Smoker and Region. There are no missing or undefined values in the dataset."),
@@ -37,7 +37,7 @@ dashboardPage(
                                          
                               )),
                               fluidRow(
-                                column(12,align="center",
+                                column(12,
                                        box(width=NULL,title="Pages information",status="info",solidHeader = TRUE,
                                            h4("First Page: Purpose for developing this app"),
                                            h4("Second Page: Exploratory Data Analysis"),
@@ -70,7 +70,7 @@ dashboardPage(
                                                      "Smoking"="smoker",Area="region"),selected="smoker")
                                    )       
                             ),
-                            column(6,
+                            column(6,align="center",
                                    box(width=NULL,title="Contingency Table",
                                        tableOutput("contingency_table"))
                             )
@@ -449,7 +449,7 @@ dashboardPage(
                                      
                                      fluidRow(
                                        column(2),
-                                       column(8,align="center",
+                                       column(8,
                                               box(width=NULL, title = "Model for prediction",status="success",solidHeader = TRUE,
                                                   radioButtons("select_model",
                                                                label = "Select the Model for prediction",
@@ -506,50 +506,42 @@ dashboardPage(
                             column(3),
                             column(6,align = "center",
                                    box(width=NULL,height=45,background="red",
-                                       title="Get Dataset"
+                                       title="Scrolling through the dataset"
+                                       
                                    )
                             ),
                             column(3)
                           ),
+                          
                           fluidRow(
-                            column(2),
-                            column(8,
-                                   box(width=NULL,height=150,align="center",
-                                       h5("You can use this page to obtain the csv file for the dataset."),
-                                       h5("1. Select the variables you want from the dataset."),
-                                       h5("2. Select",tags$b("Offset:"),"The record number from which you want to get the data."),
-                                       h5("3. Select",tags$b("Count:"),"The number of record you want in your dataset"),
-                                       h5("4. Download CSV")
-                                   )
-                            ),
-                            column(2),
-                          ),
-                          fluidRow(
-                            column(3,
+                            column(4,
                                    box(width=NULL,
-                                       checkboxGroupInput("get_data","Select predictor variables:",
-                                                          c("Age (age)"="age","Sex (sex)"="sex",
-                                                            "Chest pain type (cp)"="cp",
-                                                            "Resting blood pressure (trestbps)"="trestbps",
-                                                            "Cholestrol (chol)"="chol",
-                                                            "Fasting blood sugar (fbs)"="fbs",
-                                                            "Resting ECG (restecg)"="restecg",
-                                                            "Max. heart rate (thalach)"="thalach",
-                                                            "Exercise induced angina (exang)"="exang",
-                                                            "ST depression induced (oldpeak)"="oldpeak",
-                                                            "Slope (slope)"="slope",
-                                                            "Blood disorder (thal)"="thal","Target"="target"),
-                                                          selected=c("age","sex","chol","fbs","thalach","cp",
-                                                                     "trestbps","restecg","exang","oldpeak",
-                                                                     "slope","thal","target")),
-                                       numericInput("offset","Select offset value",
-                                                    min=0,max=1020,value=0,step=1,width=300),
-                                       numericInput("count","Select count value",
-                                                    min=5,max=1025,value=100,step=1,width=300),
-                                       downloadButton('download',"Download CSV")
+                                       checkboxGroupInput("subset_data","Select predictor variables:",
+                                                          c("Age "="age","BMI"="bmi","Sex"="sex",
+                                                            "Number of Children"="children",
+                                                            "Smoking"="smoker","Area"="region","Premium"="charges"),
+                                                          selected=c("age","sex","bmi","children")
+                                                          )
+                                       
                                    )
                             ),
-                            column(9,
+                            column(4,
+                                   box(width=NULL,
+                                       numericInput("nrows","Select offset value",
+                                                    min=1,max=1338,value=100,step=1,width=300)
+                                       
+                                       )
+                                   )
+                            ,
+                            column(4,
+                                   box(width=NULL,align="center",
+                                       downloadButton('download',"Download Subset File")
+                                   )  
+                                       
+                                   
+                            )),
+                            fluidRow(
+                            column(12,
                                    box(width=NULL,
                                        dataTableOutput("data_csv"))
                             )
