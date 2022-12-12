@@ -39,8 +39,106 @@ shinyServer(function(input, output) {
      describe(df_summary)[,1:6]
    })
    
+   output$image1<-renderImage({
+     list(src='insurance_img.jpeg',width = "50%", height = '360px',align="center")
+   })
+ # Code for plotting scatterplot or histogram
    
- 
+    output$plot1<-renderPlot({
+     
+     if(input$scatter_hist=="scatter"){
+       plot<- data %>% 
+         select(age, bmi) %>% 
+         group_by(age) %>% 
+         summarise(Avg_BMI = mean(bmi))
+       p<-ggplot(data = plot, aes(age,Avg_BMI)) + 
+         labs(x="Age",y="Average BMI",title="AGE vs BMI") + 
+         geom_point()+
+         theme(plot.title = element_text(hjust = 0.5))
+     }
+     p
+   })
+    
+    output$plot2<-renderPlot({
+      
+      if(input$scatter_hist=="scatter"){
+        plot<- data %>% 
+          select(age, charges) %>% 
+          group_by(age) %>% 
+          summarise(Avg_Charges = mean(charges))
+        p<-ggplot(data = plot, aes(age,Avg_Charges)) + 
+          labs(x="Age",y="Average Charges",title="AGE vs Charges") + 
+          geom_point()+
+          theme(plot.title = element_text(hjust = 0.5))
+      }
+      p
+    })
+    
+    output$plot5<-renderPlot({
+      
+      if(input$scatter_hist=="both_scatter_hist"){
+        plot<- data %>% 
+          select(age, bmi) %>% 
+          group_by(age) %>% 
+          summarise(Avg_BMI = mean(bmi))
+        p<-ggplot(data = plot, aes(age,Avg_BMI)) + 
+          labs(x="Age",y="Average BMI",title="AGE vs BMI") + 
+          geom_point()+
+          theme(plot.title = element_text(hjust = 0.5))
+      }
+      p
+    })
+    output$plot6<-renderPlot({
+      
+      if(input$scatter_hist=="both_scatter_hist"){
+        plot<- data %>% 
+          select(age, charges) %>% 
+          group_by(age) %>% 
+          summarise(Avg_Charges = mean(charges))
+        p<-ggplot(data = plot, aes(age,Avg_Charges)) + 
+          labs(x="Age",y="Average Charges",title="AGE vs Charges") + 
+          geom_point()+
+          theme(plot.title = element_text(hjust = 0.5))
+      }
+      p
+    })
+    
+    output$plot3<-renderPlot({
+      if(input$scatter_hist=="hist"){
+      p<-hist(data$age,main="Average Age of Insurance Holder",xlab="Age",color="magenta")
+      }
+      
+      p
+    })
+    output$plot4<-renderPlot({
+      if(input$scatter_hist=="hist"){
+        p<-hist(data$bmi,main="Average BMI of Insurance Holder",xlab="BMI",color="magenta")
+      }
+      
+      p
+    })
+    
+    output$plot7<-renderPlot({
+      if(input$scatter_hist=="both_scatter_hist"){
+        p<-hist(data$age,main="Average Age of Insurance Holder",xlab="Age",color="magenta")
+      }
+      
+      p
+    })
+    output$plot8<-renderPlot({
+      if(input$scatter_hist=="both_scatter_hist"){
+        p<-hist(data$bmi,main="Average BMI of Insurance Holder",xlab="BMI",color="magenta")
+      }
+      
+      p
+    })
+    
+    
+   
+   
+   
+   
+   
   output$plot_sex<- renderPlot({
     newdata=mydata()
     for (i in newdata){

@@ -55,7 +55,8 @@ dashboardPage(
                                 )),
                                 fluidRow(
                                   column(12,
-                                         box(width=NULL,title="Purpose of the App",status="info",solidHeader = TRUE,h4())
+                                        
+                                         imageOutput("image1")
                                              
                                   )
                             
@@ -68,11 +69,11 @@ dashboardPage(
                           fluidRow(
                             column(6,
                                    box(width=NULL,title="Categorical Summary",
-                                       h5("Select two categorical variable for contigency table "),
-                                       selectInput("variable1","First Selection",
+                                       h5("Select two categorical variable for contigency table"),
+                                       selectInput("variable1","First Variable",
                                                    c("Sex"="sex","Number of kids"="children",
                                                      "Smoking"="smoker",Area="region"),selected="sex"),
-                                       selectInput("variable2","Second Selection",
+                                       selectInput("variable2","Second Variable",
                                                    c("Sex"="sex","Number of kids"="children",
                                                      "Smoking"="smoker",Area="region"),selected="smoker")
                                    )       
@@ -98,58 +99,7 @@ dashboardPage(
                                    )
                             )
                           ),
-                          # fluidRow(
-                          #   column(1
-                          #   ),
-                          #   column(10,align = "center",
-                          #          box(width=NULL,height=45,title="Quantitative Data Graphs",background="red")
-                          #   ),
-                          #   column(1
-                          #   )
-                          # ),
-                          fluidRow(
-                            column(2,
-                                   box(width=NULL,title="Plots for numerical variables",
-                                       selectInput("box_or_hist","Select the kinds of plots you want to see",
-                                                   c("Only Boxplots"="box_only","Only Histograms"="hist_only",
-                                                     "Both Box plots and Histograms"="both_box_hist"),selected="both_box_hist")
-                                   )       
-                            ),
-                            column(5,
-                                   box(width=NULL,
-                                       plotOutput('bh_plot1')
-                                   ),
-                                   box(width=NULL,
-                                       plotOutput('bh_plot3')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "input.box_or_hist == 'both_box_hist'",
-                                     box(width=NULL,
-                                         plotOutput("bh_plot5")
-                                     ),
-                                     box(width=NULL,
-                                         plotOutput("bh_plot7")
-                                     )
-                                   ) 
-                            ),
-                            column(5,
-                                   box(width=NULL,
-                                       plotOutput('bh_plot2')
-                                   ),
-                                   box(width=NULL,
-                                       plotOutput('bh_plot4')
-                                   ),
-                                   conditionalPanel(
-                                     condition = "input.box_or_hist == 'both_box_hist'",
-                                     box(width=NULL,
-                                         plotOutput("bh_plot6")
-                                     ),
-                                     box(width=NULL,
-                                         plotOutput("bh_plot8")
-                                     )
-                                   )
-                            )
-                          ),
+                          
                           fluidRow(
                             column(1
                             ),
@@ -163,7 +113,7 @@ dashboardPage(
                             column(2,
                                    box(width=NULL,title="Plots for categorical variables",
                                        checkboxGroupInput("bar_plots",
-                                                          "Select the variables for which you want to see bar plots",
+                                                          "Bar Plots for selected variables",
                                                           c("Sex"="sex","Number of kids"="children",
                                                             "Smoking"="smoker",Area="region"),
                                                           selected=c("sex","children","smoker","region"))
@@ -198,6 +148,68 @@ dashboardPage(
                                             
                                      )
                                    )
+                            )
+                          ),
+                          fluidRow(
+                            column(1
+                            ),
+                            column(10,align = "center",
+                                   box(width=NULL,height=45,title="Scatterplot and Histogram",background="orange")
+                            ),
+                            column(1
+                            )
+                          ),
+                          fluidRow(
+                            column(2,
+                                   box(width=NULL,title="Types of plot",
+                                       selectInput("scatter_hist","Select between scatter plot or histogram",
+                                                   c("Scatterplot"="scatter","Histogram"="hist",
+                                                     "Scatterplot and Histogram"="both_scatter_hist"),selected="scatter")
+                                   )),
+                            
+                            
+                            column(5,
+                                   conditionalPanel(
+                                     condition = "input.scatter_hist == 'scatter'",
+                                     box(width=NULL,
+                                         plotOutput('plot1')
+                                     )),
+                                   conditionalPanel(
+                                     condition = "input.scatter_hist == 'hist'",
+                                     box(width=NULL,
+                                         plotOutput('plot3')
+                                     )),
+                                   conditionalPanel(
+                                     condition = "input.scatter_hist == 'both_scatter_hist'",
+                                     
+                                     box(width=NULL,
+                                         plotOutput("plot5")
+                                     ),
+                                     box(width=NULL,
+                                         plotOutput("plot7")
+                                     )
+                                   )      
+                            ),
+                            column(5,
+                                   conditionalPanel(
+                                     condition = "input.scatter_hist == 'scatter'",
+                                     box(width=NULL,
+                                         plotOutput('plot2')
+                                     )),
+                                   conditionalPanel(
+                                     condition = "input.scatter_hist == 'hist'",
+                                     box(width=NULL,
+                                         plotOutput('plot4')
+                                     )),
+                                   conditionalPanel(
+                                     condition = "input.scatter_hist == 'both_scatter_hist'",
+                                     box(width=NULL,
+                                         plotOutput("plot6")
+                                     ),
+                                     box(width=NULL,
+                                         plotOutput("plot8")
+                                     )
+                                   )   
                             )
                           )
                           
