@@ -17,15 +17,7 @@ dashboardPage(
                 tabItems(
                   tabItem(tabName = "about",
                           
-                          fluidRow(
-                            column(3),
-                            column(6,align = "center",
-                                   box(width=NULL,height=45,background="orange",
-                                       title="App Information"
-                                   )
-                            ),
-                            column(3)
-                          ),
+                         
                           fluidRow(
                             column(12,
                                 box(width=NULL,title="Purpose of the App",status="info",solidHeader = TRUE,
@@ -308,12 +300,12 @@ dashboardPage(
                                        column(1
                                        ),
                                        column(5,
-                                              box(width=NULL,status="info",
+                                              box(width=NULL,status="success",
                                                   sliderInput("split_number","Training Set proportion",
                                                               min=0.6,max=0.9,value=0.7,step=0.05))
                                        ),
                                        column(5,
-                                              box(width =NULL,status = "info",align="center",
+                                              box(width =NULL,status = "info",align="center",background="green",
                                                   
                                                   actionButton("split","Click here to split Data"))
                                        ),
@@ -321,144 +313,137 @@ dashboardPage(
                                        )
                                      ),
                                      fluidRow(
-                                       column(4,
-                                              box(width=NULL,title="Generalized Linear Model: Binary Logistic Regression",
-                                                  status="info",solidHeader = TRUE,
+                                       column(12,align = "center",
+                                              box(width=NULL,title="Linear Regression",align = "center",
+                                                  status="success",solidHeader = TRUE,
                                                   checkboxGroupInput("train_var1","Select predictor variables:",
-                                                                     c("Age (age)"="age","Sex (sex)"="sex",
-                                                                       "Chest pain type (cp)"="cp",
-                                                                       "Resting blood pressure (trestbps)"="trestbps",
-                                                                       "Cholestrol (chol)"="chol",
-                                                                       "Fasting blood sugar (fbs)"="fbs",
-                                                                       "Resting ECG (restecg)"="restecg",
-                                                                       "Max. heart rate (thalach)"="thalach",
-                                                                       "Exercise induced angina (exang)"="exang",
-                                                                       "ST depression induced (oldpeak)"="oldpeak",
-                                                                       "Slope (slope)"="slope",
-                                                                       "Blood disorder (thal)"="thal"),
-                                                                     selected=c("age","sex","chol","fbs","thalach","cp",
-                                                                                "trestbps","restecg","exang","oldpeak",
-                                                                                "slope","thal"))
+                                                                     c("Age "="age","BMI"="bmi","Sex"="sex",
+                                                                       "Number of Children"="children",
+                                                                       "Smoking"="smoker","Area"="region"),
+                                                                     selected=c("age","sex","bmi")
                                               )
-                                       ),
-                                       column(4,
-                                              box(width=NULL,title="Classification Tree",
-                                                  status="info",solidHeader = TRUE,
-                                                  checkboxGroupInput("train_var2","Select predictor variables:",
-                                                                     c("Age (age)"="age","Sex (sex)"="sex",
-                                                                       "Chest pain type (cp)"="cp",
-                                                                       "Resting blood pressure (trestbps)"="trestbps",
-                                                                       "Cholestrol (chol)"="chol",
-                                                                       "Fasting blood sugar (fbs)"="fbs",
-                                                                       "Resting ECG (restecg)"="restecg",
-                                                                       "Max. heart rate (thalach)"="thalach",
-                                                                       "Exercise induced angina (exang)"="exang",
-                                                                       "ST depression induced (oldpeak)"="oldpeak",
-                                                                       "Slope (slope)"="slope",
-                                                                       "Blood disorder (thal)"="thal"),
-                                                                     selected=c("age","sex","chol","fbs","thalach","cp",
-                                                                                "trestbps","restecg","exang","oldpeak",
-                                                                                "slope","thal")),
-                                                  sliderInput("max_depth","Select the max depth of the tree",
-                                                              min=2,max=10,value=6,step=1)
-                                              )
-                                       ),
-                                       column(4,
-                                              box(width=NULL,title="Random Forest Model",
-                                                  status="info",solidHeader = TRUE,
-                                                  checkboxGroupInput("train_var3","Select predictor variables:",
-                                                                     c("Age (age)"="age","Sex (sex)"="sex",
-                                                                       "Chest pain type (cp)"="cp",
-                                                                       "Resting blood pressure (trestbps)"="trestbps",
-                                                                       "Cholestrol (chol)"="chol",
-                                                                       "Fasting blood sugar (fbs)"="fbs",
-                                                                       "Resting ECG (restecg)"="restecg",
-                                                                       "Max. heart rate (thalach)"="thalach",
-                                                                       "Exercise induced angina (exang)"="exang",
-                                                                       "ST depression induced (oldpeak)"="oldpeak",
-                                                                       "Slope (slope)"="slope",
-                                                                       "Blood disorder (thal)"="thal"),
-                                                                     selected=c("age","sex","chol","fbs","thalach","cp",
-                                                                                "trestbps","restecg","exang","oldpeak",
-                                                                                "slope","thal")),
-                                                  sliderInput("mtry","Select the  number of variables to randomly sample as candidates at each split",
-                                                              min=2,max=10,value=5,step=1)
                                               )
                                        )
+                                       ),
+                                     fluidRow(
+                                       column(8,align = "center",
+                                              box(width=NULL,title="Regression Tree",align = "center",
+                                                  status="success",solidHeader = TRUE,
+                                                  checkboxGroupInput("train_var2","Select predictor variables:",
+                                                                     c("Age "="age","BMI"="bmi","Sex"="sex",
+                                                                       "Number of Children"="children",
+                                                                       "Smoking"="smoker","Area"="region"),
+                                                                       selected=c("age","sex","bmi")),
+                                                  
+                                              
+                                       )
+                                       ),
+                                       column(4,align = "center",
+                                              box(width=NULL,title="Tuning Regression Tree",align = "center",
+                                                  status="success",solidHeader = TRUE,
+                                         sliderInput("max_depth","Select the max depth of the tree",
+                                                     min=2,max=10,value=6,step=1)
+                                       )
+                                     )
+                                     ),
+                                     fluidRow(
+                                       column(8,align = "center",
+                                              box(width=NULL,title="Random Forest",align = "center",
+                                                  status="success",solidHeader = TRUE,
+                                                  checkboxGroupInput("train_var3","Select predictor variables:",
+                                                                     c("Age "="age","BMI"="bmi","Sex"="sex",
+                                                                       "Number of Children"="children",
+                                                                       "Smoking"="smoker","Area"="region"),
+                                                                       selected=c("age","sex","bmi")),
+                                                  
+                                              )
+                                       ),
+                                       column(4,align = "center",
+                                              box(width=NULL,title="Tuning Random Forest",align = "center",
+                                                  status="success",solidHeader = TRUE,
+                                                  sliderInput("mtry","Select the  number of variables to randomly sample as candidates at each split",
+                                                   min=2,max=5,value=3,step=1)
+                                              )
+                                       )
+                                    
                                      ),
                                      fluidRow(
                                        column(2),
                                        column(8,align = "center",
-                                              box(width=NULL,
-                                                  h4("For each of the models select the predictor variables 
-                          and other model settings above.Use the button below to 
-                          train all the models and perform predictions on test data."),
-                                                  #h5("NOTE: In case you need to change model parameters, follow these steps:"),
-                                                  #h5("1.Uncheck the box below"),
-                                                  #h5("2.Change model parameters/ predictor variables"),
-                                                  #h5("3.Check the box below and wait till you see 'Training Complete' message"),
-                                                  actionButton(inputId="model_train",label="Train models and Predict")
-                                                  #textOutput("model_fits")
+                                              box(width=NULL,background="green",
+                                                 
+                                                  
+                                                  actionButton(inputId="model_train",label="Click here to fit the model")
+                                                  
                                               )
                                        ),
                                        column(2)
                                      ),
                                      fluidRow(
-                                       column(4,
-                                              box(width=NULL,title="Generalized Linear Model: Binary Logistic Regression",
+                                       column(12,
+                                              box(width=NULL,title="Linear Regression Performance Metrics",
                                                   status="info",solidHeader = TRUE,
+                                                  column(4,
                                                   h5(tags$b("Training accuracy:")),
-                                                  verbatimTextOutput("train_stats_lg"),
-                                                  h5(tags$b("Summary:")),
-                                                  verbatimTextOutput("train_stats_lg_summary")
-                                              )
-                                       ),
-                                       column(4,
-                                              box(width=NULL,title="Classification Tree",
-                                                  status="info",solidHeader = TRUE,
-                                                  h5(tags$b("Training accuracy:")),
-                                                  verbatimTextOutput("train_stats_tree"),
-                                                  h5(tags$b("Summary:")),
-                                                  verbatimTextOutput("train_stats_tree_summary")
+                                                  verbatimTextOutput("linear_train_rmse"),
                                                   
+                                              ),
+                                              column(4,
+                                                     h5(tags$b("Summary:")),
+                                                     verbatimTextOutput("linear_summary")
+                                              
+                                              ),
+                                              column(4,
+                                                     h5(tags$b("Test Accuracy:")),
+                                                     verbatimTextOutput("linear_test_rmse")
+                                                     
                                               )
+                                              
+                                       )
+                                       )
                                        ),
-                                       column(4,
-                                              box(width=NULL,title="Random Forest Model",
-                                                  status="info",solidHeader = TRUE,
+                                     fluidRow(
+                                       column(12,
+                                              box(width=NULL,title="Regression Tree Performance Metric",
+                                                  status="success",solidHeader = TRUE,
+                                                  column(4,
                                                   h5(tags$b("Training accuracy:")),
-                                                  verbatimTextOutput("train_stats_rf"),
-                                                  h5(tags$b("Summary:")),
-                                                  verbatimTextOutput("train_stats_rf_summary")
+                                                  verbatimTextOutput("decision_tree_train_rmse")
+                                                  
+                                                  ),
+                                                  column(4,
+                                                         h5(tags$b("Summary:")),
+                                                         verbatimTextOutput("decision_tree_summary")
+                                                         
+                                                  ),
+                                                  column(4,
+                                                         h5(tags$b("Testing accuracy:")),
+                                                         verbatimTextOutput("decision_tree_test_rmse")
+                                                         
+                                                  )  
+                                              )
+                                       )),
+                                     fluidRow(
+                                       column(12,
+                                              box(width=NULL,title="Random Forest Performance Metric",
+                                                  status="success",solidHeader = TRUE,
+                                                  column(4,
+                                                  h5(tags$b("Training accuracy:")),
+                                                  verbatimTextOutput("train_stats_rf")
+                                                  ),
+                                                  column(4,
+                                                         h5(tags$b("Summary:")),
+                                                         verbatimTextOutput("rf_summary")
+                                                  ),
+                                                  column(4,
+                                                         h5(tags$b("Training accuracy:")),
+                                                         verbatimTextOutput("rf_test_rmse")
+                                                  )
+                                                  
                                               )
                                        )
                                      ),
-                                     fluidRow(
-                                       column(4,
-                                              box(width=NULL,status="info",
-                                                  h5(tags$b("Testing accuracy:")),
-                                                  verbatimTextOutput("test_stats_lg"),
-                                                  h5(tags$b("Confusion Matrix:")),
-                                                  verbatimTextOutput("test_cf_lg")
-                                              )
-                                       ),
-                                       column(4,
-                                              box(width=NULL,status="info",
-                                                  h5(tags$b("Testing accuracy:")),
-                                                  verbatimTextOutput("test_stats_tree"),
-                                                  h5(tags$b("Confusion Matrix:")),
-                                                  verbatimTextOutput("test_cf_tree")
-                                              )
-                                       ),
-                                       column(4,
-                                              box(width=NULL,status="info",
-                                                  h5(tags$b("Testing accuracy:")),
-                                                  verbatimTextOutput("test_stats_rf"),
-                                                  h5(tags$b("Confusion Matrix:")),
-                                                  verbatimTextOutput("test_cf_rf")
-                                              )
-                                       )
-                                     )
+                                     
                             ),
                             tabPanel("Prediction",
                                      

@@ -35,6 +35,7 @@ shinyServer(function(input, output) {
  })
    output$numerical_summaries<-renderDataTable({
      summ<-summaries()
+     
      df_summary<-data%>%select(summ)
      describe(df_summary)[,1:6]
    })
@@ -133,11 +134,6 @@ shinyServer(function(input, output) {
       p
     })
     
-    
-   
-   
-   
-   
    
   output$plot_sex<- renderPlot({
     newdata=mydata()
@@ -178,6 +174,33 @@ shinyServer(function(input, output) {
        }}
      p
    })
- 
- 
+  
+   # Splitting the data 
+   splitting<-eventReactive(input$split,{
+     
+    input$split_number
+    
+   })
+   
+   # Selecting features for linear regression
+   features_linear<-eventReactive(input$model_train,{
+     val1<-c(input$train_var1)
+   })
+   output$linear_test_rmse<-renderText({
+    split1<-splitting()
+   feat_linear<-features_linear()
+   linear_data<-data%>%select(feat_linear,charges)
+   splitSize <- sample(nrow(linear_data), nrow(linear_data)*splitting())
+  
+     trainSet_linear <- linear_data[splitSize,]
+     
+   testSet_linear <- linear_data[-splitSize,]
+    
+   linear_fit<-lm(bmi~.,data=trainSet_linear)
+    linear_predict=predict(linear_fit,testSet_linear)
+    linear_rmse<-sqrt(mean(testSet_linear$charges-linear_predict)^2)
+    print(linear_rmse)
+   })
+   
+   
 })
