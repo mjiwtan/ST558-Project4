@@ -19,7 +19,7 @@ dashboardPage(
                           
                          
                           fluidRow(
-                            column(12,
+                            column(12,align="center",
                                 box(width=NULL,title="Purpose of the App",status="info",solidHeader = TRUE,
                                     h4("The aim for this application is to create a shiny app for the insurance of the data."),
                                     h4("The app will help in identifying in the insurance charges for the person. The app will contain information about 
@@ -27,7 +27,7 @@ dashboardPage(
                                     
                             )),
                             fluidRow(
-                              column(12,
+                              column(12,align="center",
                                      box(width=NULL,title="Data",status="info",solidHeader = TRUE,
                                          h4("US health Insurance dataset can be helpful in a simple yet illuminating study in understanding the risk underwriting in Health Insurance, the interplay of various attributes of the insured and see how they affect the insurance premium."),
                                          h4("This dataset contains 1338 rows of insured data, where the Insurance charges are given against the following attributes of the insured: Age, Sex, BMI, Number of Children, Smoker and Region. There are no missing or undefined values in the dataset."),
@@ -37,7 +37,7 @@ dashboardPage(
                                          
                               )),
                               fluidRow(
-                                column(12,
+                                column(12,align="center",
                                        box(width=NULL,title="Pages information",status="info",solidHeader = TRUE,
                                            h4("First Page: Purpose for developing this app"),
                                            h4("Second Page: Exploratory Data Analysis"),
@@ -212,7 +212,7 @@ dashboardPage(
                                      fluidRow(
                                        column(12,
                                               box(width=NULL,title="Linear Regression",
-                                                  status="info",solidHeader = TRUE,
+                                                  status="success",solidHeader = TRUE,
                                                   h4("A variable's value can be predicted using linear regression analysis based on the value of another variable. The dependent variable is the one you want to be able to forecast. The independent variable is the one you're using to make a prediction about the value of the other variable."),
                                                   h4(""),
                                                   withMathJax(),
@@ -241,7 +241,7 @@ dashboardPage(
                                      fluidRow(
                                        column(12,
                                               box(width=NULL,title="Regression Decision Tree",
-                                                  status="info",solidHeader = TRUE,
+                                                  status="success",solidHeader = TRUE,
                                                   h4("Regression trees are decision trees with continuous target variables rather than class labels on the leaves. Modified split selection criteria and halting criteria are used with regression trees. The decisions may be explained, prospective outcomes can be seen, and potential events can be identified using a regression tree."),
                                                   
                                                   h4(tags$b("Benefits:"),
@@ -265,7 +265,7 @@ dashboardPage(
                                      fluidRow(
                                        column(12,
                                               box(width=NULL,title="Random Forest Model",
-                                                  status="info",solidHeader = TRUE,
+                                                  status="success",solidHeader = TRUE,
                                                   h4("Random Forest develops on functionalities of Bagging. A number of multiple bootstrap samples are created with replacement and trees are fitted on these samples to predict the response variable. Random forest take average of these trees to arrive at a result. However random forest don't take all the feature for building the trees, unlike bagging. The features are selected at random which helps to reduce the correlation among the trees and hence reduces variance."),
                                                   
                                                   h4(tags$b("Benefits:"),
@@ -341,7 +341,7 @@ dashboardPage(
                                        column(4,align = "center",
                                               box(width=NULL,title="Tuning Regression Tree",align = "center",
                                                   status="success",solidHeader = TRUE,
-                                         sliderInput("max_depth","Select the max depth of the tree",
+                                         sliderInput("tree_depth","Select the depth of the tree",
                                                      min=2,max=10,value=6,step=1)
                                        )
                                      )
@@ -361,8 +361,8 @@ dashboardPage(
                                        column(4,align = "center",
                                               box(width=NULL,title="Tuning Random Forest",align = "center",
                                                   status="success",solidHeader = TRUE,
-                                                  sliderInput("mtry","Select the  number of variables to randomly sample as candidates at each split",
-                                                   min=2,max=5,value=3,step=1)
+                                                  sliderInput("ntree","Select the  number of trees",
+                                                   min=50,max=200,value=100,step=10)
                                               )
                                        )
                                     
@@ -382,18 +382,18 @@ dashboardPage(
                                      fluidRow(
                                        column(12,
                                               box(width=NULL,title="Linear Regression Performance Metrics",
-                                                  status="info",solidHeader = TRUE,
-                                                  column(4,
+                                                  status="success",solidHeader = TRUE,
+                                                  column(6,
                                                   h5(tags$b("Training accuracy:")),
                                                   verbatimTextOutput("linear_train_rmse"),
                                                   
                                               ),
-                                              column(4,
-                                                     h5(tags$b("Summary:")),
-                                                     verbatimTextOutput("linear_summary")
-                                              
-                                              ),
-                                              column(4,
+                                              # column(4,
+                                              #        h5(tags$b("Summary:")),
+                                              #        verbatimTextOutput("linear_summary")
+                                              # 
+                                              # ),
+                                              column(6,
                                                      h5(tags$b("Test Accuracy:")),
                                                      verbatimTextOutput("linear_test_rmse")
                                                      
@@ -406,17 +406,17 @@ dashboardPage(
                                        column(12,
                                               box(width=NULL,title="Regression Tree Performance Metric",
                                                   status="success",solidHeader = TRUE,
-                                                  column(4,
+                                                  column(6,
                                                   h5(tags$b("Training accuracy:")),
                                                   verbatimTextOutput("decision_tree_train_rmse")
                                                   
                                                   ),
-                                                  column(4,
-                                                         h5(tags$b("Summary:")),
-                                                         verbatimTextOutput("decision_tree_summary")
-                                                         
-                                                  ),
-                                                  column(4,
+                                                  # column(4,
+                                                  #        h5(tags$b("Summary:")),
+                                                  #        verbatimTextOutput("decision_tree_summary")
+                                                  #        
+                                                  # ),
+                                                  column(6,
                                                          h5(tags$b("Testing accuracy:")),
                                                          verbatimTextOutput("decision_tree_test_rmse")
                                                          
@@ -427,16 +427,16 @@ dashboardPage(
                                        column(12,
                                               box(width=NULL,title="Random Forest Performance Metric",
                                                   status="success",solidHeader = TRUE,
-                                                  column(4,
+                                                  column(6,
                                                   h5(tags$b("Training accuracy:")),
-                                                  verbatimTextOutput("train_stats_rf")
+                                                  verbatimTextOutput("rf_train_rmse")
                                                   ),
-                                                  column(4,
-                                                         h5(tags$b("Summary:")),
-                                                         verbatimTextOutput("rf_summary")
-                                                  ),
-                                                  column(4,
-                                                         h5(tags$b("Training accuracy:")),
+                                                  # column(4,
+                                                  #        h5(tags$b("Summary:")),
+                                                  #        verbatimTextOutput("rf_summary")
+                                                  # ),
+                                                  column(6,
+                                                         h5(tags$b("Test accuracy:")),
                                                          verbatimTextOutput("rf_test_rmse")
                                                   )
                                                   
@@ -449,67 +449,51 @@ dashboardPage(
                                      
                                      fluidRow(
                                        column(2),
-                                       column(8,
-                                              box(width=NULL,
-                                                  selectInput("model_input","Select the model you want to use 
-                              for prediction",
-                                                              c("Binary Logistic Regression"="lg",
-                                                                "Classification Tree"="tree",
-                                                                "Random Forest"="rf"),selected="lg")
+                                       column(8,align="center",
+                                              box(width=NULL, title = "Model for prediction",status="success",solidHeader = TRUE,
+                                                  radioButtons("select_model",
+                                                               label = "Select the Model for prediction",
+                                                               choices = c("Linear Regression",
+                                                                           "Decision Tree",
+                                                                           "Random Forest"),
+                                                               selected = "Linear Regression",
+                                                               
+                                                               inline = FALSE)
                                               )     
                                        ),
                                        column(2)
                                      ),
-                                     fluidRow(
-                                       column(3),
-                                       column(6,
-                                              box(width=NULL,status="info",align="center",
-                                                  h4("NOTE"),
-                                                  h5("In the Model Fitting tab (previous tab), please train the 
-                     selected model on all the variables before proceeding with Prediction")
-                                              )
-                                       ),
-                                       column(3)
-                                     ),
+                                     
                                      fluidRow(
                                        column(1),
                                        column(5,
-                                              box(width=NULL,title="Select the values of predictors",
-                                                  numericInput("p_age","Age",min=29,max=77,value=50,step=2,
+                                              box(width=NULL,title="Select the values of predictors",solidHeader=TRUE,
+                                                  status="success",align="center",
+                                                  numericInput("v_age","Age",min=10,max=77,value=50,step=1,
                                                                width=300),
-                                                  selectInput("p_sex","Sex",c("Male"=1,"Female"=0),selected=1,
+                                                  selectInput("v_sex","Sex",c("Male"=1,"Female"=0),selected=1,
                                                               width=300),
-                                                  selectInput("p_cp","Chest pain type",
-                                                              c("Typical Angina"=0,"Atypical Angina"=1,
-                                                                "Non-Anginal"=2,"Aysmptomatic"=3),selected=0,
+                                                  numericInput("v_bmi","BMI",min=14,max=36,value=24,step=0.5,
+                                                               width=300),
+                                                  
+                                                  selectInput("v_children","Sex",c("Zero"=0,"One"=1,"Two"=2,"Three"=3),selected=1,
                                                               width=300),
-                                                  numericInput("p_trestbps","Resting Blood pressure",
-                                                               min=94,max=200,value=130,step=2,width=300),
-                                                  numericInput("p_chol","Cholestrol level",
-                                                               min=126,max=564,value=200,step=10,width=300),
-                                                  selectInput("p_fbs","Fasting blood sugar greater than 120 mg/dl",
-                                                              c("Yes"=1,"No"=0),selected=0,width=300),
-                                                  selectInput("p_restecg","Resting ECG",
-                                                              c("Normal"=0,"Having ST-T wave abnormality"=1,
-                                                                "Showing left ventricular hypertrophy"=2),
-                                                              selected=0,width=300),
-                                                  numericInput("p_thalach","Max. Heart rate",
-                                                               min=71,max=202,value=90,step=2,width=300),
-                                                  selectInput("p_exang","Exercise Induced Angina",
-                                                              c("Yes"=1,"No"=0),selected=0,width=300),
-                                                  numericInput("p_oldpeak","ST depression induced by exercise 
-                               relative to rest",
-                                                               min=0,max=6.2,value=4,step=0.1,width=300),
-                                                  selectInput("p_slope","Slope of the peak exercise ST segment",
-                                                              c("0"=0,"1"=1,"2"=2),selected=1,width=300),
-                                                  selectInput("p_thal","Blood disorder(thalassemia)",
-                                                              c("Normal"=1,"Fixed defect"=2,"Reversable defect"=3),
-                                                              selected=1,width=300),
+                                                  selectInput("v_smoker","Smoker",c("NO"=0,"YES"=1),selected=1,
+                                                              width=300),
+                                                  selectInput("v_region","Sex",c("Northeast"=0,"Northwest"=1,"southeast"=2,"Southwest"=3),selected=1,
+                                                              width=300)
                                               )
-                                       ),
+                                                  
+                                                  
+                                                 
+                                                 
+                                              ),
+                                       
                                        column(5,
                                               box(width=NULL,title="Prediction",solidHeader=TRUE,
-                                                  status="info",align="center",
+                                                  status="success",align="center",
+                                                  h5(tags$b("Charges($):")),
+                                                  
                                                   textOutput("final_prediction"))
                                        ),
                                        column(1)
