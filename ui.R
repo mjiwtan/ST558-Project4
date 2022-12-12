@@ -341,8 +341,8 @@ dashboardPage(
                                        column(4,align = "center",
                                               box(width=NULL,title="Tuning Regression Tree",align = "center",
                                                   status="success",solidHeader = TRUE,
-                                         sliderInput("tree_depth","Select the depth of the tree",
-                                                     min=2,max=10,value=6,step=1)
+                                         sliderInput("tree_cp","Select the cpmplexity parameter",
+                                                     min=0,max=0.1,value=0.01,step=0.01)
                                        )
                                      )
                                      ),
@@ -388,11 +388,7 @@ dashboardPage(
                                                   verbatimTextOutput("linear_train_rmse"),
                                                   
                                               ),
-                                              # column(4,
-                                              #        h5(tags$b("Summary:")),
-                                              #        verbatimTextOutput("linear_summary")
-                                              # 
-                                              # ),
+                                             
                                               column(6,
                                                      h5(tags$b("Test Accuracy:")),
                                                      verbatimTextOutput("linear_test_rmse")
@@ -411,13 +407,9 @@ dashboardPage(
                                                   verbatimTextOutput("decision_tree_train_rmse")
                                                   
                                                   ),
-                                                  # column(4,
-                                                  #        h5(tags$b("Summary:")),
-                                                  #        verbatimTextOutput("decision_tree_summary")
-                                                  #        
-                                                  # ),
+                                                
                                                   column(6,
-                                                         h5(tags$b("Testing accuracy:")),
+                                                         h5(tags$b("Test accuracy:")),
                                                          verbatimTextOutput("decision_tree_test_rmse")
                                                          
                                                   )  
@@ -431,10 +423,7 @@ dashboardPage(
                                                   h5(tags$b("Training accuracy:")),
                                                   verbatimTextOutput("rf_train_rmse")
                                                   ),
-                                                  # column(4,
-                                                  #        h5(tags$b("Summary:")),
-                                                  #        verbatimTextOutput("rf_summary")
-                                                  # ),
+                                                 
                                                   column(6,
                                                          h5(tags$b("Test accuracy:")),
                                                          verbatimTextOutput("rf_test_rmse")
@@ -465,8 +454,8 @@ dashboardPage(
                                      ),
                                      
                                      fluidRow(
-                                       column(1),
-                                       column(5,
+                                       column(3),
+                                       column(6,
                                               box(width=NULL,title="Select the values of predictors",solidHeader=TRUE,
                                                   status="success",align="center",
                                                   numericInput("v_age","Age",min=10,max=77,value=50,step=1,
@@ -489,15 +478,20 @@ dashboardPage(
                                                  
                                               ),
                                        
-                                       column(5,
+                                       
+                                       column(3)
+                                     ),
+                                     fluidRow(
+                                       column(3),
+                                       column(6,
                                               box(width=NULL,title="Prediction",solidHeader=TRUE,
                                                   status="success",align="center",
                                                   h5(tags$b("Charges($):")),
                                                   
                                                   textOutput("final_prediction"))
                                        ),
-                                       column(1)
-                                     ),
+                                       column(3)
+                                     )
                             )
                           )
                   ), #tabItem

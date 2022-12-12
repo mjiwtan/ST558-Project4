@@ -17,6 +17,8 @@ dataextra<-data
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+  
+  # Printing Contingency table
   mydata<-reactive({
     val<-input$bar_plots
     })
@@ -30,6 +32,8 @@ shinyServer(function(input, output) {
    table(dataextra[[contin[1]]],dataextra[[contin[2]]])
    
    })
+ 
+ # Printing numerical summaries
  summaries<-reactive({
    val1<-c(input$num_summary)
  })
@@ -40,10 +44,12 @@ shinyServer(function(input, output) {
      describe(df_summary)[,1:6]
    })
    
+   # Inserting Image on Page 1
    output$image1<-renderImage({
      list(src='insurance_img.jpeg',width = "50%", height = '360px',align="center")
    })
- # Code for plotting scatterplot or histogram
+ 
+   # Code for plotting scatterplot or histogram
    
     output$plot1<-renderPlot({
      
@@ -134,7 +140,7 @@ shinyServer(function(input, output) {
       p
     })
     
-   
+   #Plotting Bar plots
   output$plot_sex<- renderPlot({
     newdata=mydata()
     for (i in newdata){
@@ -186,6 +192,8 @@ shinyServer(function(input, output) {
    features_linear<-eventReactive(input$model_train,{
      val1<-c(input$train_var1)
    })
+   
+   # Fitting Linear Regression
    output$linear_test_rmse<-renderText({
     split1<-splitting()
    feat_linear<-features_linear()
@@ -225,7 +233,7 @@ shinyServer(function(input, output) {
    })
    
    tune_dt<-eventReactive(input$model_train,{
-     val1<-c(input$tree_depth)
+     val1<-c(input$tree_cp)
    })
    
    output$decision_tree_train_rmse<-renderText({
@@ -237,6 +245,14 @@ shinyServer(function(input, output) {
      trainSet_dt <- dt_data[splitSize,]
      
      testSet_dt <- dt_data[-splitSize,]
+     dt_fit = train(charges ~ ., 
+                       data=trainSet_dt, 
+                       method="rpart", 
+                       trControl = trainControl(method = "cv"),
+                    tuneGrid =  expand.grid(cp = tune_dt()))
+     dt_predict=predict(dt_fit,trainSet_dt)
+     dt_train_rmse<-sqrt(mean((trainSet_dt$charges-dt_predict)^2))
+     print(dt_train_rmse)
      
    })
    
@@ -249,6 +265,15 @@ shinyServer(function(input, output) {
      trainSet_dt <- dt_data[splitSize,]
      
      testSet_dt <- dt_data[-splitSize,]
+     dt_fit = train(charges ~ ., 
+                    data=trainSet_dt, 
+                    method="rpart", 
+                    trControl = trainControl(method = "cv"),
+                    tuneGrid =  expand.grid(cp = tune_dt())
+                    )
+     dt_predict=predict(dt_fit,testSet_dt)
+     dt_test_rmse<-sqrt(mean((testSet_dt$charges-dt_predict)^2))
+     print(dt_test_rmse)
      
    })
    
@@ -341,6 +366,26 @@ shinyServer(function(input, output) {
                                                    smoker=as.factor(params[[5]]),region=as.factor(params[[6]])))
      
    }
+     if(select_model=="Decision Tree"){
+       params<-parameters()
+       split1<-splitting()
+       splitSize <- sample(nrow(data), nrow(data)*splitting())
+       
+       trainSet_dt <- data[splitSize,]
+       
+       testSet_dt <- data[-splitSize,] 
+       
+       dt_fit = train(charges ~ ., 
+                      data=trainSet_dt, 
+                      method="rpart", 
+                      trControl = trainControl(method = "cv"),
+                      tuneGrid =  expand.grid(cp = tune_dt())
+       )
+       predict_value=predict(dt_fit,data.frame(age=as.numeric(params[[1]]),sex=as.factor(params[[2]]),bmi=as.numeric(params[[3]]),children=as.factor(params[[4]]),
+                                                smoker=as.factor(params[[5]]),region=as.factor(params[[6]])))
+       
+       
+     }
      if(select_model=="Random Forest"){
        params<-parameters()
        split1<-splitting()
@@ -372,25 +417,18 @@ shinyServer(function(input, output) {
    reading<-reactive({
      val1<-c(input$subset_data)
    })
-   num_rows<-reactive({
-     input$nrows
-   })
-   
-   output$data_csv<-renderDataTable({
-     subsetting<-reading()
-     size=num_rows()
-     df_subset<-data_original%>%select(subsetting)
-     df_subset[c(1:size),]
-   })    
-   
-   # Download the data
-   
-   reading1<-eventReactive(input$download,{
-     val1<-c(input$subset_data)
-   })
    num_rows1<-reactive({
      data_original[c(1:input$nrows),]
    })
+   output$data_csv<-renderDataTable({
+     
+     size=num_rows1()
+     df_subset<-data_original%>%select(reading())
+     
+   })    
+   
+   # Download the data
+
    output$download <- downloadHandler(
      filename = function() { 
        paste("Insurance1", Sys.Date(), ".csv", sep="")
@@ -399,5 +437,6 @@ shinyServer(function(input, output) {
        final_data<-num_rows1()%>%select(reading())
        
        write.csv(final_data , file)
-     })
+     }
+     )
 })
