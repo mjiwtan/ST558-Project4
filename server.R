@@ -1,11 +1,15 @@
+install.packages(c("shiny","tidyverse","caret","leaps","pysch","shinydashboard"))
+
 library(shiny)
 library(tidyverse)
 library(caret)
 library(leaps)
 library(psych) 
-library(corrplot)
+
 data<-read_csv("insurance.csv")
 data_original<-data
+
+# Factorizing data
 data$sex <- as.factor(data$sex)
 data$sex <- factor(data$sex, levels = c("female", "male"), labels = c(0,1))
 data$children<-as.factor(data$children)
@@ -15,7 +19,7 @@ data$region <- as.factor(data$region)
 data$region <- factor(data$region, levels = c("northeast", "northwest","southeast","southwest"), labels = c(0,1,2,3))
 dataextra<-data
 
-# Define server logic required to draw a histogram
+
 shinyServer(function(input, output) {
   
   # Printing Contingency table
@@ -141,6 +145,7 @@ shinyServer(function(input, output) {
     })
     
    #Plotting Bar plots
+    
   output$plot_sex<- renderPlot({
     newdata=mydata()
     for (i in newdata){
@@ -226,8 +231,10 @@ shinyServer(function(input, output) {
      linear_train_rmse<-sqrt(mean((trainSet_linear$charges-linear_predict)^2))
      print(linear_train_rmse)
      })
+   
  
    # Fitting Decision Tree
+   
    features_dt<-eventReactive(input$model_train,{
      val1<-c(input$train_var2)
    })

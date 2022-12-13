@@ -15,6 +15,8 @@ dashboardPage(
               ),
               dashboardBody(
                 tabItems(
+                  # UI for the first page
+                  
                   tabItem(tabName = "about",
                           
                          
@@ -55,6 +57,8 @@ dashboardPage(
                             
                           )
                   ),  #Tab item
+                  
+                  # UI for the scond Page
                   tabItem(tabName = "data_exp",
                          
                           
@@ -70,11 +74,15 @@ dashboardPage(
                                                      "Smoking"="smoker",Area="region"),selected="smoker")
                                    )       
                             ),
+                            
+                            # Contingency table
                             column(6,align="center",
                                    box(width=NULL,title="Contingency Table",
                                        tableOutput("contingency_table"))
                             )
-                          ),fluidRow(
+                          ),
+                          # Numerical Summaries
+                          fluidRow(
                             column(3,
                                    box(width=NULL,height=405,title="Numerical Summary",
                                        checkboxGroupInput("num_summary",
@@ -101,6 +109,8 @@ dashboardPage(
                             column(1
                             )
                           ),
+                          
+                          #Categorical Bar Plots for sex,children.smoker and region
                           fluidRow(
                             column(2,
                                    box(width=NULL,title="Plots for categorical variables",
@@ -142,6 +152,8 @@ dashboardPage(
                                    )
                             )
                           ),
+                          
+                          # Selcting between Scatterplot or histogram
                           fluidRow(
                             column(1
                             ),
@@ -206,7 +218,10 @@ dashboardPage(
                           )
                           
                   ), #tabItem
+                  
+      
                   tabItem(tabName = "model",
+                          # UI for first Tab of modelling page. Three models explained
                           tabsetPanel(
                             tabPanel("Modeling Info",
                                      fluidRow(
@@ -286,6 +301,8 @@ dashboardPage(
                                        )
                                      )
                             ),
+                   
+                   # Splitting data, fitting linear regression, regression tree and random forestand calculating MSE
                             tabPanel("Model Fitting",
                                      fluidRow(
                                        column(1
@@ -371,7 +388,7 @@ dashboardPage(
                                        column(2),
                                        column(8,align = "center",
                                               box(width=NULL,background="green",
-                                                 
+                                                 # Only when this button is pressed the model is fitted
                                                   
                                                   actionButton(inputId="model_train",label="Click here to fit the model")
                                                   
@@ -379,6 +396,8 @@ dashboardPage(
                                        ),
                                        column(2)
                                      ),
+                                     
+                                     # Performance metrics
                                      fluidRow(
                                        column(12,
                                               box(width=NULL,title="Linear Regression Performance Metrics",
@@ -433,7 +452,11 @@ dashboardPage(
                                        )
                                      ),
                                      
+                                 
+                                         
                             ),
+                   
+                   # Ui for prediction, Slecting model, inserting feature values
                             tabPanel("Prediction",
                                      
                                      fluidRow(
@@ -495,6 +518,8 @@ dashboardPage(
                             )
                           )
                   ), #tabItem
+                  
+                  # Subsetting data based on selecting columns and number of rows
                   tabItem(tabName = "data",
                           fluidRow(
                             column(3),
