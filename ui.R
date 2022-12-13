@@ -21,9 +21,9 @@ dashboardPage(
                           fluidRow(
                             column(12,
                                 box(width=NULL,title="Purpose of the App",status="info",solidHeader = TRUE,
-                                    h4("The aim for this application is to create a shiny app for the insurance of the data."),
-                                    h4("The app will help in identifying in the insurance charges for the person. The app will contain information about 
-                                        data, exploaratory data analysis and summaries of various features in the data.Along with that different machine learning models will be explained and how they performed on the actual data."))
+                                    h4("The aim for this shiny app is to analyse the data and make necesssary prediction for insurance prepmim of a customer which helps insurance company to make better business decision and increase profitability."),
+                                    h4("The app will help in identifying in the insurance premium for the person. The app contains information about 
+                                        data, exploratory data analysis and summaries of various features in the data.Along with that, different machine learning models will be explained and how they performed on the actual data."))
                                     
                             )),
                             fluidRow(
@@ -39,10 +39,10 @@ dashboardPage(
                               fluidRow(
                                 column(12,
                                        box(width=NULL,title="Pages information",status="info",solidHeader = TRUE,
-                                           h4("First Page: Purpose for developing this app"),
-                                           h4("Second Page: Exploratory Data Analysis"),
-                                           h4("Third Page: Modeling and Prediction"),
-                                           h4("Fourth Page: Scrolling through the data"))
+                                           h4("First Page: In this page , I defined the purpose of creating this app, along with data set and necessary features required."),
+                                           h4("Second Page: Performed Exploratory Data Analysis on the data. I created numerical and categorical summaries. Along with that user gets the option to select between scatter plot and histogram. In addition to that user can see bar plots for the selected features. User can select multiple bar plots at a time"),
+                                           h4("Third Page: Explained Linear Regression, Decision Tree and Random Forest. In the second tab of this page decided the train-test split,selected the features on which we need to perform modeling and checked training and test accuracy for them"),
+                                           h4("Fourth Page: Scrolled through the data for a certain number of rows and columns(features). Also added a functionality which gives the user option to download the selected data."))
                                   
                                 )),
                                 fluidRow(
@@ -521,7 +521,7 @@ dashboardPage(
                             ),
                             column(4,
                                    box(width=NULL,
-                                       numericInput("nrows","Select offset value",
+                                       numericInput("nrows","Select number of rows",
                                                     min=1,max=1338,value=100,step=1,width=300)
                                        
                                        )

@@ -418,12 +418,12 @@ shinyServer(function(input, output) {
      val1<-c(input$subset_data)
    })
    num_rows1<-reactive({
-     data_original[c(1:input$nrows),]
+     head(data_original,input$nrows)
    })
    output$data_csv<-renderDataTable({
      
      size=num_rows1()
-     df_subset<-data_original%>%select(reading())
+     df_subset<-num_rows1()%>%select(reading())
      
    })    
    
