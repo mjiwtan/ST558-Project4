@@ -1,4 +1,4 @@
-install.packages(c("shiny","tidyverse","caret","leaps","pysch","shinydashboard"))
+
 
 library(shiny)
 library(tidyverse)
